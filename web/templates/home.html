@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-3">
+{% if user.is_authenticated %}
+<h1 class="text-center text-info"><u>Records</u></h1>
+<table class="table table-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Phone</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Zipcode</th>
+      <th scope="col">Created_at</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% if records %}
+      
+      {% for record in records %}
+        
+     
+      <tr>
+        <th >{{record.first_name}}{{ record.last_name}}</th>
+        <td>{{record.email}}</td>
+        <td>{{record.address}}</td>
+        <td>{{record.phone}}</td>
+        <td>{{record.city}}</td>
+        <td>{{record.state}}</td>
+        <td>{{record.zipcode}}</td>
+        <td>{{record.created_at}}</td>
+        <td> <a class="btn btn-secondary" role="button" href="{% url 'record' record.id %}">{{record.id}}</a></td>
+       
+      </tr>
+      {% endfor %}
+        
+      
+      {% endif %} 
+  </tbody>
+</table>
+<div class="d-grid gap-2 col-4 mx-auto">
+<a class="btn btn-primary" href="{% url 'add_record' %}" role="button">Add Record</a>
+</div>
+</div>
+
+  
+    {% else %}
+    <div class="col-md-6 offset-md-3 mt-3">
+    <div class="container shadow-lg p-5 mb-3 text-light rounded-3" style="background-color: #7EAA92;">
+    <h1 class="col-md-6 offset-md-3">Login Form</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="uname" class="form-label">Username</label>
+            <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="Password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" required>
+        </div>
+       
+        <button type="submit" class="btn btn-outline-success fw-bold">Submit</button>
+      </form>
+  </div>
+ </div>   
+ {% endif %}
+{% endblock  %}
+    
